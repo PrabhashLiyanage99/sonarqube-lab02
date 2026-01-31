@@ -1,4 +1,4 @@
-package main.java.com.example;
+package com.example;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,11 +17,6 @@ public class UserService {
             pst.setString(1, username);
             pst.executeQuery();
         }
-    }
-
-    // SMELL: Unused method
-    public void notUsed() {
-        System.out.println("I am never called");
     }
 
     // EVEN WORSE: another SQL injection
