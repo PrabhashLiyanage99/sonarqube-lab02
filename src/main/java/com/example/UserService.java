@@ -11,8 +11,7 @@ import java.util.logging.Logger;
 public class UserService {
     private static final Logger LOGGER = Logger.getLogger(UserService.class.getName());
     
-    // Use environment variable for password to avoid hardcoding
-    private String password = System.getenv("DB_PASSWORD") != null ? System.getenv("DB_PASSWORD") : "admin123";
+    private String password = "admin123";
     private String dbUrl = "jdbc:mysql://localhost/db";
     private String dbUser = "root";
 
