@@ -2,8 +2,8 @@ package main.java.com.example;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class UserService {
 
@@ -13,9 +13,9 @@ public class UserService {
     // VULNERABILITY: SQL Injection
     public void findUser(String username) throws SQLException {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/db", "root", password);
-             Statement st = conn.createStatement()) {
-            String query = "SELECT * FROM users WHERE name = '" + username + "'";
-            st.executeQuery(query);
+             PreparedStatement pst = conn.prepareStatement("SELECT * FROM users WHERE name = ?")) {
+            pst.setString(1, username);
+            pst.executeQuery();
         }
     }
 
@@ -27,9 +27,9 @@ public class UserService {
     // EVEN WORSE: another SQL injection
     public void deleteUser(String username) throws SQLException {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/db", "root", password);
-             Statement st = conn.createStatement()) {
-            String query = "DELETE FROM users WHERE name = '" + username + "'";
-            st.execute(query);
+             PreparedStatement pst = conn.prepareStatement("DELETE FROM users WHERE name = ?")) {
+            pst.setString(1, username);
+            pst.executeUpdate();
         }
     }
 }
