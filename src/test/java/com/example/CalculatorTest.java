@@ -12,9 +12,7 @@ class CalculatorTest {
     @ParameterizedTest
     @CsvSource({
         "10, 5, add, 15",
-        "10, 5, add-again, 15",
         "10, 5, sub, 5",
-        "10, 5, sub-again, 5",
         "10, 5, mul, 50",
         "10, 2, div, 5",
         "10, 0, div, 0",

@@ -10,11 +10,13 @@ public class App {
 
     public static void main(String[] args) {
         try {
-            CalculatorTest calc = new CalculatorTest();
+            Calculator calc = new Calculator();
             
             // Log the result instead of using System.out
-            int result = calc.calculate(10, 5, "add-again");
-            LOGGER.log(Level.INFO, "Calculation Result: {0}", result);
+            if (LOGGER.isLoggable(Level.INFO)) {
+                int result = calc.calculate(10, 5, "add-again");
+                LOGGER.log(Level.INFO, "Calculation Result: {0}", result);
+            }
 
             UserService service = new UserService();
             service.findUser("admin");
