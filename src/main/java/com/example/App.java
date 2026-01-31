@@ -10,7 +10,7 @@ public class App {
 
     public static void main(String[] args) {
         try {
-            CalculatorTest calc = new CalculatorTest();
+            Calculator calc = new Calculator();
             
             // Log the result instead of using System.out
             int result = calc.calculate(10, 5, "add-again");
