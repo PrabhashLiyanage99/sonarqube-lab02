@@ -11,9 +11,9 @@ import java.util.logging.Logger;
 public class UserService {
     private static final Logger LOGGER = Logger.getLogger(UserService.class.getName());
     
-    private String password = "admin123";
-    private String dbUrl = "jdbc:mysql://localhost/db";
-    private String dbUser = "root";
+    private final String password = "admin123";
+    private final String dbUrl = "jdbc:mysql://localhost/db";
+    private final String dbUser = "root";
 
     public void findUser(String username) {
         String query = "SELECT id, name, email FROM users WHERE name = ?";
