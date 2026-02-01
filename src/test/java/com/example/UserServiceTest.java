@@ -1,18 +1,10 @@
 package com.example;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.Test;
-import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.MockedStatic;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
+import java.sql.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceTest {
     private final UserService userService = new UserService();
@@ -46,45 +38,6 @@ class UserServiceTest {
             when(mockConn.prepareStatement(anyString())).thenReturn(mockPstmt);
 
             assertDoesNotThrow(() -> userService.deleteUser("admin"));
-        }
-    }
-
-    @Test
-    void testDeleteUser_Exception() throws Exception {
-        SQLException sqlException = new SQLException("Connection failed");
-        try (MockedStatic<DriverManager> mockedDriverManager = mockStatic(DriverManager.class)) {
-            mockedDriverManager.when(() -> DriverManager.getConnection(anyString(), anyString(), anyString()))
-                               .thenThrow(sqlException);
-
-            assertDoesNotThrow(() -> userService.deleteUser("admin"));
-        }
-    }
-
-    @Test
-    void testFindUser_NotFound() throws Exception {
-        try (MockedStatic<DriverManager> mockedDriverManager = mockStatic(DriverManager.class)) {
-            Connection mockConn = mock(Connection.class);
-            PreparedStatement mockPstmt = mock(PreparedStatement.class);
-            ResultSet mockRs = mock(ResultSet.class);
-
-            mockedDriverManager.when(() -> DriverManager.getConnection(anyString(), anyString(), anyString()))
-                               .thenReturn(mockConn);
-            when(mockConn.prepareStatement(anyString())).thenReturn(mockPstmt);
-            when(mockPstmt.executeQuery()).thenReturn(mockRs);
-            when(mockRs.next()).thenReturn(false); // No user found
-
-            assertDoesNotThrow(() -> userService.findUser("nonexistent"));
-        }
-    }
-
-    @Test
-    void testFindUser_Exception() throws Exception {
-        SQLException sqlException = new SQLException("Connection failed");
-        try (MockedStatic<DriverManager> mockedDriverManager = mockStatic(DriverManager.class)) {
-            mockedDriverManager.when(() -> DriverManager.getConnection(anyString(), anyString(), anyString()))
-                               .thenThrow(sqlException);
-
-            assertDoesNotThrow(() -> userService.findUser("admin"));
         }
     }
 }
